@@ -46,6 +46,7 @@
     "cssify": "0.8.0",
     "deamdify": "0.1.1",
     "del": "2.1.0",
+    "d3": "4.2.2",
     "envify": "3.4.0",
     "eslint-plugin-nodeca": "1.0.3",
     "esprima": "2.7.2",

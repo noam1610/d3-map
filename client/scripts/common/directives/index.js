@@ -2,7 +2,6 @@
 
 module.exports = function(app) {
     // inject:start
-    require('./home')(app);
-    require('./test')(app);
+    require('./ngTest')(app);
     // inject:end
 };
