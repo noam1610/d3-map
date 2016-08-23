@@ -6,24 +6,26 @@ module.exports = function(app) {
     var fullname = app.name + '.' + controllername;
     /*jshint validthis: true */
 
-    var deps = ['$scope'];
+    var deps = ['$scope', app.name + '.drawer', app.name + '.serverData'];
 
-    function controller($scope) {
+    function controller($scope, drawer, serverData) {
         var vm = this;
         vm.controllername = fullname;
 
-        var dataset = [5, 10, 15, 20, 25];
+        var res = serverData.getPatientCountTri();
+        drawer.drawPieChart(res);
 
-        var canvas = d3.select("body")
-            .append("svg")
-            .attr("width", 500)
-            .attr("height;", 150);
+        // var bodySelection = d3.select('body');
 
-            
+        // var svgSelection = bodySelection.append('svg')
+        //     .attr('width', 50)
+        //     .attr('height', 50);
 
-        // var sousCanvas = canvas.select('a')
-        //     .append('path')
-        //     .text('a');
+        // var circleSelection = svgSelection.append('circle')
+        //     .attr('cx', 25)
+        //     .attr('cy', 25)
+        //     .attr('r', 25)
+        //     .style('fill', 'purple');
 
     }
 
