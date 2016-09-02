@@ -15,7 +15,7 @@ module.exports = function(app) {
         // var res = serverData.getPatientCountTri();
         // drawer.drawPieChart(res);
 
-        drawer.drawPieChartAnimated();
+        drawer.drawTimePlot();
 
     }
 

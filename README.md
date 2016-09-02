@@ -30,12 +30,25 @@ var svg = d3.select('body')
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 ```
 
+Add new elements
+```javascript
+var circle = svg.selectAll("circle").data(data) // UPDATE
+    .style("fill", "blue");
 
+circle.exit().remove(); // EXIT
+
+circle.enter().append("circle") // ENTER
+    .style("fill", "green")
+  .merge(circle) // ENTER + UPDATE
+    .style("stroke", "black");
+```
 
 
 
 
 Liens intérressants
+
+https://github.com/d3/d3/blob/master/CHANGES.md
 
 http://kaisersly.github.io/scottmurray-d3-fr
 

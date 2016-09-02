@@ -1,5 +1,37 @@
 @import "../../node_modules/ionic-sdk/scss/ionic.scss";
 @import "../../node_modules/font-awesome/scss/font-awesome.scss";
-  
+.bar rect {
+    fill: steelblue;
+}
 
+.bar text {
+    fill: #fff;
+    font: 10px sans-serif;
+}
 
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.area {
+  fill: lightsteelblue;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.dot {
+  fill: white;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
