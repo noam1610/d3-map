@@ -475,11 +475,11 @@ module.exports = function(app) {
                 };
 
                 var a = {
-                    value: Math.sin(2 * Math.PI * i / 200)
+                    value: Math.abs(Math.sin(2 * Math.PI * i / 200))
                 };
                 a.date = tempDate;
 
-                tempDate = new Date(tempDate.setTime(tempDate.getTime() +  86400000));
+                tempDate = new Date(tempDate.setTime(tempDate.getTime() + 86400000));
 
                 data.push(a);
             }
@@ -623,13 +623,147 @@ module.exports = function(app) {
 
         };
 
+        var drawLinesArrivalByTime = function() {
+
+            var date = new Date(2000, 1, 1);
+            var curvesData = [{
+                id: 'noam',
+                values: generateRandomTable(date, 10)
+            }, {
+                id: 'nom',
+                values: generateRandomTable(date, 10)
+            }
+            // , {
+            //     id: 'test',
+            //     values: generateRandomTable(date, 10)
+            // }, {
+            //     id: 'a',
+            //     values: generateRandomTable(date, 10)
+            // }, {
+            //     id: 'b',
+            //     values: generateRandomTable(date, 10)
+            // }, {
+            //     id: 'c',
+            //     values: generateRandomTable(date, 10)
+            // }
+            ];
+
+            console.log(curvesData);
+            var margin = {
+                top: 40,
+                right: 40,
+                bottom: 40,
+                left: 40
+            };
+            var width = 960 - margin.left - margin.right;
+            var height = 500 - margin.top - margin.bottom;
+
+            var svg = d3.select('body')
+                .append('svg')
+                .datum(curvesData)
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom);
+
+            var g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+            var x = d3.scaleTime()
+                .domain([new Date(1999, 12, 30), new Date(2000, 1, 20)])
+                .range([0, width]);
+
+            var y = d3.scaleLinear()
+                .range([height, 0])
+                .domain([0, 1]);
+
+            var z = d3.scaleOrdinal(d3.schemeCategory10);
+
+            var line = d3.line()
+                .curve(d3.curveBasis)
+                .x(function(d) {
+                    return x(d.date);
+                })
+                .y(function(d) {
+                    return y(d.value);
+                });
+
+            g.append('g')
+                .attr('class', 'axis axis--x')
+                .attr('transform', 'translate(0,' + height + ')')
+                .call(d3.axisBottom(x));
+
+            g.append('g')
+                .attr('class', 'axis axis--y')
+                .call(d3.axisLeft(y))
+                .append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', 6)
+                .attr('dy', '0.71em')
+                .attr('fill', '#000')
+                .text('Temperature, ºF');
+
+            var curve = g.selectAll('.curve')
+                .data(curvesData)
+                .enter()
+                .append('g')
+                .attr('class', 'curve');
+
+            curve.append('path')
+                .attr('class', 'line')
+                .attr('d', function(d) {
+                    return line(d.values);
+                })
+                .style('stroke', function(d) {
+                    return z(d.id);
+                });
+
+            curve.append('text')
+                .datum(function(d) {
+                    return {
+                        id: d.id,
+                        value: d.values[d.values.length - 1]
+                    };
+                })
+                .attr('transform', function(d) {
+                    return 'translate(' + x(d.value.date) + ',' + y(d.value.value) + ')';
+                })
+                .attr('x', 3)
+                .attr('dy', '0.35em')
+                .style('font', '10px sans-serif')
+                .text(function(d) {
+                    return d.id;
+                });
+        };
+
+        var generateRandomTable = function(initDate, days) {
+            var data = [];
+            var tempDate = initDate;
+            for (var i = 1; i < days; i++) {
+                if (i == 1) {
+                    tempDate = initDate;
+                } else {
+                    tempDate = new Date(tempDate.setTime(tempDate.getTime() + 86400000));
+                }
+                var a = {
+                    value: Math.random(),
+                    date: tempDate
+                };
+                // console.log('tempDate', tempDate);
+                // console.log(a.date);
+                // console.log(a);
+
+                data.push(a);
+            }
+
+            return data;
+        };
+
         return {
             drawPieChart: drawPieChart,
             drawPieChartBis: drawPieChartBis,
             drawPieChartCanvas: drawPieChartCanvas,
             drawPieChartAnimated: drawPieChartAnimated,
             drawLine: drawLine,
-            drawTimePlot: drawTimePlot
+            drawTimePlot: drawTimePlot,
+            drawLinesArrivalByTime: drawLinesArrivalByTime
         };
 
     }
