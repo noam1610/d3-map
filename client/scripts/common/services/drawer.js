@@ -632,6 +632,12 @@ module.exports = function(app) {
             }, {
                 id: 'nom',
                 values: generateRandomTable(date, 10)
+            }, {
+                id: 'lol',
+                values: generateRandomTable(date, 10)
+            }, {
+                id: 'lrl',
+                values: generateRandomTable(date, 10)
             }
             // , {
             //     id: 'test',
@@ -746,10 +752,6 @@ module.exports = function(app) {
                     value: Math.random(),
                     date: tempDate
                 };
-                // console.log('tempDate', tempDate);
-                // console.log(a.date);
-                // console.log(a);
-
                 data.push(a);
             }
 

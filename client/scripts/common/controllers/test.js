@@ -13,7 +13,7 @@ module.exports = function(app) {
         vm.controllername = fullname;
 
         // var res = serverData.getPatientCountTri();
-        // drawer.drawPieChart(res);
+        //  drawer.drawPieChart(res);
         // drawer.drawTimePlot();
         drawer.drawLinesArrivalByTime();
 
